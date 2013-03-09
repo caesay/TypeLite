@@ -39,7 +39,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITsModelVisitor.cs" />
+    <Compile Include="ITsTypeFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeScript.cs" />
+    <Compile Include="TsGenerator.cs" />
+    <Compile Include="TsModel.cs" />
+    <Compile Include="TsModelBuilder.cs" />
+    <Compile Include="TsModels\TsClass.cs" />
+    <Compile Include="TsModels\TsCollection.cs" />
+    <Compile Include="TsModels\TsProperty.cs" />
+    <Compile Include="TsModels\TsSystemType.cs" />
+    <Compile Include="TsModels\TsType.cs" />
+    <Compile Include="TsModels\TsTypeFamily.cs" />
+    <Compile Include="TsModelVisitor.cs" />
+    <Compile Include="TsTypeFormatter.cs" />
+    <Compile Include="TsTypeFormatterCollection.cs" />
+    <Compile Include="TypeResolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

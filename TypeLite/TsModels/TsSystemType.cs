@@ -5,9 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TypeLite.TsModels {
+	/// <summary>
+	/// Represents a sysstem type in the code model.
+	/// </summary>
 	public class TsSystemType : TsType {
+		/// <summary>
+		/// Gets kind of the system type.
+		/// </summary>
 		public SystemTypeKind Kind { get; private set; }
 
+		/// <summary>
+		/// Initializes a new instance of the TsSystemType with the specific CLR type.
+		/// </summary>
+		/// <param name="clrType">The CLR type represented by this instance of the TsSystemType.</param>
 		public TsSystemType(Type clrType)
 			: base(clrType) {
 
@@ -32,12 +42,5 @@ namespace TypeLite.TsModels {
 					throw new ArgumentException(string.Format("The type '{0}' is not supported system type.", clrType.FullName));
 			}
 		}
-	}
-
-	public enum SystemTypeKind {
-		Number = 1,
-		String = 2,
-		Bool = 3,
-		Date = 4
 	}
 }

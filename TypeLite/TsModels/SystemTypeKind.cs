@@ -6,30 +6,27 @@ using System.Threading.Tasks;
 
 namespace TypeLite.TsModels {
 	/// <summary>
-	/// Represents a type of the TsType
+	/// Defines kind of the system type.
 	/// </summary>
-	internal enum TsTypeFamily {
+	public enum SystemTypeKind {
 		/// <summary>
-		/// System type
+		/// Number
 		/// </summary>
-		/// <remarks>
-		/// e.g. string, int, ...
-		/// </remarks>
-		System,
+		Number = 1,
 
 		/// <summary>
-		/// Collection
+		/// String
 		/// </summary>
-		Collection,
+		String = 2,
 
 		/// <summary>
-		/// Class
+		/// Boolean
 		/// </summary>
-		Class,
+		Bool = 3,
 
 		/// <summary>
-		/// Other type
+		/// Date
 		/// </summary>
-		Type
+		Date = 4
 	}
 }

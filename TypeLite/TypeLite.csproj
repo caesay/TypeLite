@@ -42,6 +42,7 @@
     <Compile Include="ITsModelVisitor.cs" />
     <Compile Include="ITsTypeFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TsModels\SystemTypeKind.cs" />
     <Compile Include="TypeScript.cs" />
     <Compile Include="TsGenerator.cs" />
     <Compile Include="TsModel.cs" />

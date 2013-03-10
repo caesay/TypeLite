@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 using TypeLite.TsModels;
 
 namespace TypeLite {
+	/// <summary>
+	/// Formats TsType for output.
+	/// </summary>
 	public interface ITsTypeFormatter {
-		string FormatType(TsType type, ITsTypeFormatter formatter);
+		/// <summary>
+		/// Formats TsType for output
+		/// </summary>
+		/// <param name="type">The type to format.</param>
+		/// <returns>The string representation of the type.</returns>
+		string FormatType(TsType type);
 	}
 
 }

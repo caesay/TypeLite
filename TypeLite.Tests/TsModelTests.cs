@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Moq;
+using TypeLite.Tests.TestModels;
+using TypeLite.TsModels;
 using Xunit;
 
 namespace TypeLite.Tests {
@@ -16,5 +18,40 @@ namespace TypeLite.Tests {
 			Assert.NotNull(target.Classes);
 			Assert.Empty(target.Classes);
 		}
+
+
+		#region RunVisitor tests
+
+		[Fact]
+		public void WhenRunVisitor_VisitClassIsCalledForClassesOfModel() {
+			var visitor = new Mock<TsModelVisitor>();
+			visitor.Setup(o => o.VisitClass(It.Is<TsClass>(c => c.ClrType == typeof(Person)))).Verifiable();
+			visitor.Setup(o => o.VisitClass(It.Is<TsClass>(c => c.ClrType == typeof(Address)))).Verifiable();
+
+			var builder = new TsModelBuilder();
+			builder.Add(typeof(Person), true);
+
+			var target = builder.Build();
+			target.RunVisitor(visitor.Object);
+
+			visitor.VerifyAll();
+		}
+
+		[Fact]
+		public void WhenRunVisitor_VisitPropertyIsCalledForPropertiesOfModelClasses() {
+			var visitor = new Mock<TsModelVisitor>();
+			visitor.Setup(o => o.VisitProperty(It.Is<TsProperty>(p => p.Name == "Street"))).Verifiable();
+			visitor.Setup(o => o.VisitProperty(It.Is<TsProperty>(p => p.Name == "Town"))).Verifiable();
+
+			var builder = new TsModelBuilder();
+			builder.Add(typeof(Address), true);
+
+			var target = builder.Build();
+			target.RunVisitor(visitor.Object);
+
+			visitor.VerifyAll();
+		}
+
+		#endregion
 	}
 }

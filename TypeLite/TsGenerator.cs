@@ -7,46 +7,74 @@ using System.Threading.Tasks;
 using TypeLite.TsModels;
 
 namespace TypeLite {
+	/// <summary>
+	/// Generates TypeScript definitions form the code model.
+	/// </summary>
 	public class TsGenerator {
 		private TsTypeFormatterCollection _formatter;
+
+		/// <summary>
+		/// Gets collection of formatters for individual TsTypes
+		/// </summary>
 		public IReadOnlyDictionary<Type, TsTypeFormatter> Formaters {
 			get {
 				return new ReadOnlyDictionary<Type, TsTypeFormatter>(_formatter._formatters);
 			}
 		}
 		
+		/// <summary>
+		/// Initializes a new instance of the TsGenerator class with the default formatters.
+		/// </summary>
 		public TsGenerator() {
 			_formatter = new TsTypeFormatterCollection();
 			_formatter.RegisterTypeFormatter<TsClass>((type, formatter) => ((TsClass)type).Name);
 			_formatter.RegisterTypeFormatter<TsSystemType>((type, formatter) => ((TsSystemType)type).Kind.ToString().ToLower());
-			_formatter.RegisterTypeFormatter<TsCollection>((type, formatter) => formatter.FormatType(((TsCollection)type).ItemsType, formatter) + "[]");
+			_formatter.RegisterTypeFormatter<TsCollection>((type, formatter) => formatter.FormatType(((TsCollection)type).ItemsType) + "[]");
 		}
 
+		/// <summary>
+		/// Registers the formatter for the specific TsType
+		/// </summary>
+		/// <typeparam name="TFor">The type to register the formatter for. TFor is restricted to TsType and derived classes.</typeparam>
+		/// <param name="formatter">The formatter to register</param>
+		/// <remarks>
+		/// If a formatter for the type is already registered, it is overwriten to the new value.
+		/// </remarks>
 		public void RegisterTypeFormatter<TFor>(TsTypeFormatter formatter) where TFor : TsType {
 			_formatter.RegisterTypeFormatter<TFor>(formatter);
 		}
 
+		/// <summary>
+		/// Generates TypeScript definitions for classes in the model.
+		/// </summary>
+		/// <param name="model">The code model with classes to generate definitions for.</param>
+		/// <returns>TypeScript definitions for classes in the model.</returns>
 		public string Generate(TsModel model) {
 			var sb = new StringBuilder();
 
 			foreach (var classModel in model.Classes) {
-				this.AppendClassInterface(classModel, sb);
+				this.AppendClassDefinition(classModel, sb);
 			}
 			
 			return sb.ToString();
 
 		}
 
-		private void AppendClassInterface(TsClass classModel, StringBuilder sb) {
-			sb.AppendFormat("interface {0} ", _formatter.FormatType(classModel, _formatter));
+		/// <summary>
+		/// Generates class definition and appends it to the output
+		/// </summary>
+		/// <param name="classModel">The class to generate definition for</param>
+		/// <param name="sb">The output</param>
+		private void AppendClassDefinition(TsClass classModel, StringBuilder sb) {
+			sb.AppendFormat("interface {0} ", _formatter.FormatType(classModel));
 			if (classModel.BaseType != null) {
-				sb.AppendFormat("extends {0} ", _formatter.FormatType(classModel.BaseType, _formatter));
+				sb.AppendFormat("extends {0} ", _formatter.FormatType(classModel.BaseType));
 			}
 
 			sb.AppendLine("{");
 
 			foreach (var property in classModel.Properties) {
-				sb.AppendFormat("  {0}: {1};", property.Name, _formatter.FormatType(property.PropertyType, _formatter));
+				sb.AppendFormat("  {0}: {1};", property.Name, _formatter.FormatType(property.PropertyType));
 				sb.AppendLine();
 			}
 

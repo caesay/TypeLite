@@ -64,36 +64,6 @@ namespace TypeLite.Tests {
 
 		#endregion
 
-		#region RunVisitor tests
-
-		[Fact]
-		public void WhenRunVisitor_VisitClassIsCalledForClassesOfModel() {
-			var visitor = new Mock<TsModelVisitor>();
-			visitor.Setup(o => o.VisitClass(It.Is<TsClass>(c => c.ClrType == typeof(Person)))).Verifiable();
-			visitor.Setup(o => o.VisitClass(It.Is<TsClass>(c => c.ClrType == typeof(Address)))).Verifiable();
-
-			var target = new TsModelBuilder();
-			target.Add(typeof(Person), true);
-			target.RunVisitor(visitor.Object);
-
-			visitor.VerifyAll();
-		}
-
-		[Fact]
-		public void WhenRunVisitor_VisitPropertyIsCalledForPropertiesOfModelClasses() {
-			var visitor = new Mock<TsModelVisitor>();
-			visitor.Setup(o => o.VisitProperty(It.Is<TsProperty>(p => p.Name == "Street"))).Verifiable();
-			visitor.Setup(o => o.VisitProperty(It.Is<TsProperty>(p => p.Name == "Town"))).Verifiable();
-			
-			var target = new TsModelBuilder();
-			target.Add(typeof(Address), true);
-			target.RunVisitor(visitor.Object);
-
-			visitor.VerifyAll();
-		}
-
-		#endregion
-
 		#region Build tests
 
 		[Fact]

@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 using TypeLite.TsModels;
 
 namespace TypeLite {
+	/// <summary>
+	/// Resolves TsTypes to more specialized types 
+	/// </summary>
+	/// <remarks>
+	/// When a class is added to the model by TsModelBuilder, TsType is used for all type references. The purpose of the TypeResolver is to visit references and resolve them to the more specific types.
+	/// </remarks>
 	internal class TypeResolver : TsModelVisitor {
 		Dictionary<Type, TsType> _knownTypes;
 
+		/// <summary>
+		/// Initializes a new instance of the TypeResolver.
+		/// </summary>
+		/// <param name="classes">The collection of model classes.</param>
 		public TypeResolver(IEnumerable<TsClass> classes) {
 			_knownTypes = new Dictionary<Type, TsType>();
 			foreach (var classModel in classes) {
@@ -16,16 +26,29 @@ namespace TypeLite {
 			}
 		}
 
+		/// <summary>
+		/// Resolves references in the class.
+		/// </summary>
+		/// <param name="classModel"></param>
 		public override void VisitClass(TsClass classModel) {
 			if (classModel.BaseType != null && classModel.BaseType != TsType.Any) {
 				classModel.BaseType = this.ResolveType(classModel.BaseType);
 			}
 		}
 
+		/// <summary>
+		/// Resolves references in the property.
+		/// </summary>
+		/// <param name="property"></param>
 		public override void VisitProperty(TsProperty property) {
 			property.PropertyType = this.ResolveType(property.PropertyType);
 		}
 
+		/// <summary>
+		/// Resolves TsType to the more specialized type.
+		/// </summary>
+		/// <param name="toResolve">The type to resolve.</param>
+		/// <returns></returns>
 		private TsType ResolveType(TsType toResolve) {
 			if (!(toResolve is TsType)) {
 				return toResolve;
@@ -40,7 +63,7 @@ namespace TypeLite {
 
 			switch (typeFamily) {
 				case TsTypeFamily.System: type = new TsSystemType(toResolve.ClrType); break;
-				case TsTypeFamily.Collection: type = this.ResolveCollection(toResolve) ; break;
+				case TsTypeFamily.Collection: type = this.CreateCollectionType(toResolve) ; break;
 				default: type = TsType.Any; break;
 			}
 
@@ -48,8 +71,13 @@ namespace TypeLite {
 			return type;
 		}
 
-		private TsCollection ResolveCollection(TsType toResolve) {
-			var resolved = new TsCollection(toResolve.ClrType);
+		/// <summary>
+		/// Creates a TsCollection from TsType
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		private TsCollection CreateCollectionType(TsType type) {
+			var resolved = new TsCollection(type.ClrType);
 			resolved.ItemsType = this.ResolveType(resolved.ItemsType);
 			return resolved;
 		}

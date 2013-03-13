@@ -10,6 +10,13 @@ namespace TypeLite {
 	/// Provides base class for model visitor.
 	/// </summary>
 	public abstract class TsModelVisitor : ITsModelVisitor {
+        /// <summary>
+        /// When overriden in a derived class, it can examine or modify the whole model.
+        /// </summary>
+        /// <param name="model">The code model being visited.</param>
+        public virtual void VisitModel(TsModel model) {
+        }
+
 		/// <summary>
 		/// When overriden in a derived class, it can examine or modify the class model.
 		/// </summary>
@@ -23,5 +30,5 @@ namespace TypeLite {
 		/// <param name="property">The model property being visited.</param>
 		public virtual void VisitProperty(TsProperty property) {
 		}
-	}
+    }
 }

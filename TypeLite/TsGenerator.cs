@@ -52,6 +52,12 @@ namespace TypeLite {
 		public string Generate(TsModel model) {
 			var sb = new StringBuilder();
 
+            foreach (var reference in model.References) {
+                this.AppendReference(reference, sb);
+            }
+
+            sb.AppendLine();
+
 			foreach (var classModel in model.Classes) {
 				this.AppendClassDefinition(classModel, sb);
 			}
@@ -60,11 +66,21 @@ namespace TypeLite {
 
 		}
 
+        /// <summary>
+        /// Generates reference to other d.ts file and appends it to the output.
+        /// </summary>
+        /// <param name="reference">The reference file to generate reference for.</param>
+        /// <param name="sb">The output</param>
+        private void AppendReference(string reference, StringBuilder sb) {
+            sb.AppendFormat("/// <reference path=\"{0}\" />", reference);
+            sb.AppendLine();
+        }
+
 		/// <summary>
-		/// Generates class definition and appends it to the output
+		/// Generates class definition and appends it to the output.
 		/// </summary>
-		/// <param name="classModel">The class to generate definition for</param>
-		/// <param name="sb">The output</param>
+		/// <param name="classModel">The class to generate definition for.</param>
+		/// <param name="sb">The output.</param>
 		private void AppendClassDefinition(TsClass classModel, StringBuilder sb) {
 			sb.AppendFormat("interface {0} ", _formatter.FormatType(classModel));
 			if (classModel.BaseType != null) {

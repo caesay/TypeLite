@@ -77,7 +77,7 @@ namespace TypeLite {
 		/// </summary>
 		/// <returns>The script model with the classes.</returns>
 		public TsModel Build() {
-			var model = new TsModel() { Classes = this.Classes.Values.ToList() };
+			var model = new TsModel(this.Classes.Values);
 			model.RunVisitor(new TypeResolver(this.Classes.Values));
 			return model;
 		}

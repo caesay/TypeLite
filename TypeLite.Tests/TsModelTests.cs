@@ -19,8 +19,39 @@ namespace TypeLite.Tests {
 			Assert.Empty(target.Classes);
 		}
 
+        [Fact]
+        public void WhenInitialized_ReferencesCollectionIsEmpty() {
+            var target = new TsModel();
+
+            Assert.NotNull(target.References);
+            Assert.Empty(target.References);
+        }
+
+        [Fact]
+        public void WhenInitializedWithCollectionOfClasses_ClassesAreAddedToModel() {
+            var classes = new[] { new TsClass(typeof(Person)) };
+
+            var target = new TsModel(classes);
+
+            Assert.Equal(classes, target.Classes);
+        }
 
 		#region RunVisitor tests
+
+        [Fact]
+        public void WhenRunVisitor_VisitModelIsCalledForModel() {
+            var visitor = new Mock<TsModelVisitor>();
+            var builder = new TsModelBuilder();
+            builder.Add(typeof(Person), true);
+
+            var target = builder.Build();
+
+            visitor.Setup(o => o.VisitModel(target)).Verifiable();
+
+            target.RunVisitor(visitor.Object);
+
+            visitor.VerifyAll();
+        }
 
 		[Fact]
 		public void WhenRunVisitor_VisitClassIsCalledForClassesOfModel() {

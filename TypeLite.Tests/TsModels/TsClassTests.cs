@@ -56,5 +56,12 @@ namespace TypeLite.Tests.TsModels {
 			Assert.Empty(target.Properties.Where(o => o.ClrProperty == typeof(Employee).GetProperty("Street")));
 			Assert.Empty(target.Properties.Where(o => o.ClrProperty == typeof(Employee).GetProperty("Street")));
 		}
+
+		[Fact]
+		public void WhenClassHasCustomNameInAttribute_CustomNameIsUsed() {
+			var target = new TsClass(typeof(CustomClassName));
+
+			Assert.Equal("MyClass", target.Name);
+		}
 	}
 }

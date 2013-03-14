@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace TypeLite.TsModels {
 	/// <summary>
@@ -46,6 +47,13 @@ namespace TypeLite.TsModels {
 
 			if (clrType.BaseType != null && clrType.BaseType != typeof(object)) {
 				this.BaseType = new TsType(clrType.BaseType);
+			}
+
+			var attribute = clrType.GetCustomAttribute<TsClassAttribute>(false);
+			if (attribute != null) {
+				if (!string.IsNullOrEmpty(attribute.Name)){ 
+					this.Name = attribute.Name;
+				}
 			}
 		}
 	}

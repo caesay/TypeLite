@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,12 +33,22 @@ namespace TypeLite {
 		}
 
 		/// <summary>
-		/// Adds specific class to the model.
+		/// Adds specific class with all referenced classes to the model.
 		/// </summary>
 		/// <typeparam name="T">The class type to add.</typeparam>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
 		public FluentTsModelBuider Include<T>() {
 			_modelBuilder.Add(typeof(T));
+			return this;
+		}
+
+		/// <summary>
+		/// Adds all classes annotated with the TsClassAttribute to the model.
+		/// </summary>
+		/// <param name="assembly">The assembly with classes to add</param>
+		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
+		public FluentTsModelBuider IncludeFromAssembly(Assembly assembly) {
+			_modelBuilder.Add(assembly);
 			return this;
 		}
 

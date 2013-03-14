@@ -44,5 +44,23 @@ namespace TypeLite.Tests.TsModels {
 
 			Assert.Equal(propertyInfo.PropertyType, target.PropertyType.ClrType);
 		}
+
+		[Fact]
+		public void WhenInitializedAndHasCustomNameInAttribute_CustomNameIsUsed() {
+			var propertyInfo = typeof(CustomClassName).GetProperty("CustomPorperty");
+
+			var target = new TsProperty(propertyInfo);
+
+			Assert.Equal("MyProperty", target.Name);
+		}
+
+		[Fact]
+		public void WhenInitializedAndIsAnnotatedWithIgnoreAttribute_IsIgnoresIsSetToTrue() {
+			var propertyInfo = typeof(Product).GetProperty("Ignored");
+
+			var target = new TsProperty(propertyInfo);
+
+			Assert.True(target.IsIgnored);
+		}
 	}
 }

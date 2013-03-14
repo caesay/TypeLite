@@ -73,6 +73,16 @@ namespace TypeLite {
 		}
 
 		/// <summary>
+		/// Adds all classes annotated with the TsClassAttribute from an assembly to the model.
+		/// </summary>
+		/// <param name="assembly">The assembly with classes to add</param>
+		public void Add(Assembly assembly) {
+			foreach (var type in assembly.GetTypes().Where(t => TsType.GetTypeFamily(t) == TsTypeFamily.Class)) {
+				this.Add(type);
+			}
+		}
+
+		/// <summary>
 		/// Build the model.
 		/// </summary>
 		/// <returns>The script model with the classes.</returns>

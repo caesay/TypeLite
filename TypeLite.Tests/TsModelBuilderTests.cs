@@ -64,6 +64,18 @@ namespace TypeLite.Tests {
 
 		#endregion
 
+		#region Add(Assembly) tests
+
+		[Fact]
+		public void WhenAdd_AllClassesWithTsClassAttributeAreAdded() {
+			var target = new TsModelBuilder();
+			target.Add(typeof(Product).Assembly);
+
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Product)));
+		}
+
+		#endregion
+
 		#region Build tests
 
 		[Fact]

@@ -26,6 +26,11 @@ namespace TypeLite.TsModels {
 		public PropertyInfo ClrProperty { get; private set; }
 
 		/// <summary>
+		/// Gets or sets bool value indicating whether this property will be ignored by TsGenerator.
+		/// </summary>
+		public bool IsIgnored { get; set; }
+
+		/// <summary>
 		/// Initializes a new instance of the TsProperty class with the specific CLR property.
 		/// </summary>
 		/// <param name="clrType">The CLR preperty represented by this instance of the TsProperty.</param>

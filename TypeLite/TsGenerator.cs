@@ -59,6 +59,10 @@ namespace TypeLite {
             sb.AppendLine();
 
 			foreach (var classModel in model.Classes) {
+				if (classModel.IsIgnored) {
+					continue;
+				}
+
 				this.AppendClassDefinition(classModel, sb);
 			}
 			
@@ -90,6 +94,10 @@ namespace TypeLite {
 			sb.AppendLine("{");
 
 			foreach (var property in classModel.Properties) {
+				if (property.IsIgnored) {
+					continue;
+				}
+
 				sb.AppendFormat("  {0}: {1};", property.Name, _formatter.FormatType(property.PropertyType));
 				sb.AppendLine();
 			}

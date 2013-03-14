@@ -18,6 +18,13 @@ namespace TypeLite.Tests.TsModels {
 		}
 
 		[Fact]
+		public void WhenInitialized_IsIgnoredIsFalse() {
+			var target = new TsClass(typeof(Person));
+
+			Assert.False(target.IsIgnored);
+		}
+
+		[Fact]
 		public void WhenInitialized_PropertiesAreCreated() {
 			var target = new TsClass(typeof(Address));
 

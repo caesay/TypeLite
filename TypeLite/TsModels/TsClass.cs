@@ -28,6 +28,11 @@ namespace TypeLite.TsModels {
 		public string Name { get; set; }
 
 		/// <summary>
+		/// Gets or sets bool value indicating whether this class will be ignored by TsGenerator.
+		/// </summary>
+		public bool IsIgnored { get; set; }
+
+		/// <summary>
 		/// Initializes a new instance of the TsClass class with the specific CLR type.
 		/// </summary>
 		/// <param name="clrType">The CLR type represented by this instance of the TsClass</param>

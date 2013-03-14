@@ -54,6 +54,7 @@
     <Compile Include="TestModels\Address.cs" />
     <Compile Include="TestModels\Employee.cs" />
     <Compile Include="TestModels\Person.cs" />
+    <Compile Include="TsGeneratorTests.cs" />
     <Compile Include="TsModelBuilderTests.cs" />
     <Compile Include="TsModels\TsClassTests.cs" />
     <Compile Include="TsModels\TsCollectionTests.cs" />

@@ -38,7 +38,7 @@ namespace TypeLite {
 		/// <typeparam name="T">The class type to add.</typeparam>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
 		public FluentTsModelBuider Include<T>() {
-			_modelBuilder.Add(typeof(T));
+			_modelBuilder.Add<T>();
 			return this;
 		}
 

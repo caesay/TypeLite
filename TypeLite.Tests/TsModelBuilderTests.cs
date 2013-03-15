@@ -62,6 +62,26 @@ namespace TypeLite.Tests {
 			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Person)));
 		}
 
+		[Fact]
+		public void WhenAddClassWithReferenceAndReferenceIsCollectionOfCustomType_CustomTypeIsAddedToModel() {
+			var target = new TsModelBuilder();
+
+			target.Add<CustomTypeCollectionReference>(true);
+
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(CustomTypeCollectionReference)));
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Product)));
+		}
+
+		[Fact]
+		public void WhenAddClassWithReferenceAndReferenceIsIEnumerableOfCustomType_CustomTypeIsAddedToModel() {
+			var target = new TsModelBuilder();
+
+			target.Add<CustomTypeCollectionReference>(true);
+
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(CustomTypeCollectionReference)));
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Person)));
+		}
+
 		#endregion
 
 		#region Add(Assembly) tests

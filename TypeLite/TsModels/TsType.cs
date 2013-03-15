@@ -57,6 +57,10 @@ namespace TypeLite.TsModels {
 		/// <param name="type">The IEnumerable type to get items type from</param>
 		/// <returns>The type of items in the generic IEnumerable or null if the type doesn't implement the generic version of IEnumerable.</returns>
 		internal static Type GetEnumerableType(Type type) {
+			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>)) {
+				return type.GetGenericArguments()[0];
+			}
+
 			foreach (Type intType in type.GetInterfaces()) {
 				if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IEnumerable<>)) {
 					return intType.GetGenericArguments()[0];

@@ -99,7 +99,12 @@ namespace TypeLite {
 		private void AddReferences(TsClass classModel) {
 			foreach (var property in classModel.Properties) {
 				var propertyTypeFamily = TsType.GetTypeFamily(property.PropertyType.ClrType);
-				if (propertyTypeFamily == TsTypeFamily.Class) {
+				if (propertyTypeFamily == TsTypeFamily.Collection) {
+					var collectionItemType = TsType.GetEnumerableType(property.PropertyType.ClrType);
+					if (collectionItemType != null && TsType.GetTypeFamily(collectionItemType) == TsTypeFamily.Class) {
+						this.Add(collectionItemType);
+					}
+				} else if (propertyTypeFamily == TsTypeFamily.Class) {
 					this.Add(property.PropertyType.ClrType);
 				}
 			}

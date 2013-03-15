@@ -18,6 +18,13 @@ namespace TypeLite {
         }
 
 		/// <summary>
+		/// When overriden in a derived class, it can examine or modify the stript module.
+		/// </summary>
+		/// <param name="module">The module being visited.</param>
+		public virtual void VisitModule(TsModule module) {
+		}
+
+		/// <summary>
 		/// When overriden in a derived class, it can examine or modify the class model.
 		/// </summary>
 		/// <param name="classModel">The model class being visited.</param>

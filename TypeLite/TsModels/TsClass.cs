@@ -10,10 +10,30 @@ namespace TypeLite.TsModels {
 	/// Represents a class in the code model.
 	/// </summary>
 	public class TsClass : TsType {
+        private TsModule _module;
+
 		/// <summary>
 		/// Gets collection of properties of the class.
 		/// </summary>
 		public ICollection<TsProperty> Properties { get; private set; }
+
+        /// <summary>
+        /// Gets or sets module, that contains this class.
+        /// </summary>
+        public TsModule Module {
+            get {
+                return _module;
+            }
+            set {
+                if (_module != null) {
+                    _module.RemoveClass(this);
+                }
+                _module = value;
+                if (_module != null) {
+                    _module.AddClass(this);
+                }
+            }
+        }
 
 		/// <summary>
 		/// Gets base type of the class
@@ -44,6 +64,7 @@ namespace TypeLite.TsModels {
 				.Select(pi => new TsProperty(pi))
 				.ToList();
 			this.Name = clrType.Name;
+			this.Module = new TsModule(clrType.Namespace);
 
 			if (clrType.BaseType != null && clrType.BaseType != typeof(object)) {
 				this.BaseType = new TsType(clrType.BaseType);
@@ -53,6 +74,10 @@ namespace TypeLite.TsModels {
 			if (attribute != null) {
 				if (!string.IsNullOrEmpty(attribute.Name)){ 
 					this.Name = attribute.Name;
+				}
+
+				if (!string.IsNullOrEmpty(attribute.Module)) {
+					this.Module.Name = attribute.Module;
 				}
 			}
 		}

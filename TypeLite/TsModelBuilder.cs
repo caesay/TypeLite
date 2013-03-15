@@ -57,7 +57,7 @@ namespace TypeLite {
 		public void Add(Type clrType, bool includeReferences) {
 			var typeFamily = TsType.GetTypeFamily(clrType);
 			if (typeFamily != TsTypeFamily.Class) {
-				throw new ArgumentException(string.Format("Type '{0}' isn't class. Only classes can be added to model", clrType.FullName));
+				throw new ArgumentException(string.Format("Type '{0}' isn't class. Only classes can be added to the model", clrType.FullName));
 			}
 
 			if (!this.Classes.ContainsKey(clrType)) {
@@ -88,7 +88,7 @@ namespace TypeLite {
 		/// <returns>The script model with the classes.</returns>
 		public TsModel Build() {
 			var model = new TsModel(this.Classes.Values);
-			model.RunVisitor(new TypeResolver(this.Classes.Values));
+			model.RunVisitor(new TypeResolver(model));
 			return model;
 		}
 

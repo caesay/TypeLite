@@ -89,6 +89,19 @@ namespace TypeLite.Tests {
 		}
 
 		[Fact]
+		public void WhenBuild_ModelWithModulesIsReturned() {
+			var target = new TsModelBuilder();
+			target.Add(typeof(Person), true);
+
+			var model = target.Build();
+
+			var module = model.Modules.Single();
+			var personClass = model.Classes.Where(o => o.ClrType == typeof(Person)).Single();
+
+			Assert.Same(personClass.Module, module);
+		}
+
+		[Fact]
 		public void WhenBuild_TypeReferencesInModelAreResolved() {
 			var target = new TsModelBuilder();
 			target.Add(typeof(Person), true);
@@ -101,6 +114,19 @@ namespace TypeLite.Tests {
 			Assert.Same(addressClass, personClass.Properties.Where(p => p.Name == "PrimaryAddress").Single().PropertyType);
 			Assert.IsType<TsSystemType>(personClass.Properties.Where(p => p.Name == "Name").Single().PropertyType);
 			Assert.IsType<TsCollection>(personClass.Properties.Where(p => p.Name == "Addresses").Single().PropertyType);
+		}
+
+		[Fact]
+		public void WhenBuild_ModulesInModelAreResolved() {
+			var target = new TsModelBuilder();
+			target.Add(typeof(Person));
+
+			var model = target.Build();
+
+			var personClass = model.Classes.Where(o => o.ClrType == typeof(Person)).Single();
+			var addressClass = model.Classes.Where(o => o.ClrType == typeof(Address)).Single();
+
+			Assert.Same(personClass.Module, addressClass.Module);
 		}
 
 		#endregion

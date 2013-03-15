@@ -43,7 +43,7 @@ namespace TypeLite {
 		}
 
 		/// <summary>
-		/// Adds all classes annotated with the TsClassAttribute to the model.
+		/// Adds all classes annotated with the TsClassAttribute from an assembly to the model.
 		/// </summary>
 		/// <param name="assembly">The assembly with classes to add</param>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>

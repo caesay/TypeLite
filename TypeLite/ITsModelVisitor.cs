@@ -17,6 +17,12 @@ namespace TypeLite {
         void VisitModel(TsModel model);
 
 		/// <summary>
+		/// Represents a method called for every module in the model.
+		/// </summary>
+		/// <param name="module">The module being visited.</param>
+		void VisitModule(TsModule module);
+
+		/// <summary>
 		/// Represents a method called for every class in the model.
 		/// </summary>
 		/// <param name="classModel">The model class being visited.</param>

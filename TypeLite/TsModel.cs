@@ -13,12 +13,17 @@ namespace TypeLite {
         /// <summary>
         /// Gets a collection of classes in the model.
         /// </summary>
-        public ISet<TsClass> Classes { get; set; }
+        public ISet<TsClass> Classes { get; private set; }
 
         /// <summary>
         /// Gets a collection of references to other d.ts files.
         /// </summary>
         public ISet<string> References { get; private set; }
+
+		/// <summary>
+		/// Gets a collection of modules in the module.
+		/// </summary>
+		public ISet<TsModule> Modules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the TsModel class.
@@ -34,6 +39,7 @@ namespace TypeLite {
         public TsModel(IEnumerable<TsClass> classes) {
             this.Classes = new HashSet<TsClass>(classes);
             this.References = new HashSet<string>();
+			this.Modules = new HashSet<TsModule>();
         }
 
         /// <summary>
@@ -42,6 +48,10 @@ namespace TypeLite {
         /// <param name="visitor">The model visitor to run.</param>
         public void RunVisitor(TsModelVisitor visitor) {
 			visitor.VisitModel(this);
+
+			foreach (var module in this.Modules) {
+				visitor.VisitModule(module);
+			}
 
             foreach (var classModel in this.Classes) {
                 visitor.VisitClass(classModel);

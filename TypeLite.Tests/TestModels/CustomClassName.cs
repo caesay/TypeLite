@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TypeLite.Tests.TestModels {
-	[TsClass(Name = "MyClass")]
+	[TsClass(Name = "MyClass", Module = "MyModule")]
 	public class CustomClassName {
 		[TsProperty(Name = "MyProperty")]
 		public int CustomPorperty { get; set; }

@@ -12,6 +12,7 @@ namespace TypeLite {
 	/// </summary>
 	public class TsGenerator {
 		private TsTypeFormatterCollection _formatter;
+		private HashSet<TsClass> _generatedClasses;
 
 		/// <summary>
 		/// Gets collection of formatters for individual TsTypes
@@ -26,6 +27,8 @@ namespace TypeLite {
 		/// Initializes a new instance of the TsGenerator class with the default formatters.
 		/// </summary>
 		public TsGenerator() {
+			_generatedClasses = new HashSet<TsClass>();
+
 			_formatter = new TsTypeFormatterCollection();
 			_formatter.RegisterTypeFormatter<TsClass>((type, formatter) => ((TsClass)type).Name);
 			_formatter.RegisterTypeFormatter<TsSystemType>((type, formatter) => ((TsSystemType)type).Kind.ToString().ToLower());
@@ -58,8 +61,12 @@ namespace TypeLite {
 
             sb.AppendLine();
 
+			foreach (var module in model.Modules) {
+				this.AppendModule(module, sb);
+			}
+
 			foreach (var classModel in model.Classes) {
-				if (classModel.IsIgnored) {
+				if (classModel.IsIgnored || _generatedClasses.Contains(classModel)) {
 					continue;
 				}
 
@@ -79,6 +86,21 @@ namespace TypeLite {
             sb.AppendFormat("/// <reference path=\"{0}\" />", reference);
             sb.AppendLine();
         }
+
+		private void AppendModule(TsModule module, StringBuilder sb) {
+			sb.AppendFormat("module {0} ", module.Name);
+			sb.AppendLine("{");
+
+			foreach (var classModel in module.Classes) {
+				if (classModel.IsIgnored) {
+					continue;
+				}
+
+				this.AppendClassDefinition(classModel, sb);
+			}
+
+			sb.AppendLine("}");
+		}
 
 		/// <summary>
 		/// Generates class definition and appends it to the output.
@@ -103,6 +125,8 @@ namespace TypeLite {
 			}
 
 			sb.AppendLine("}");
+
+			_generatedClasses.Add(classModel);
 		}
 	}
 }

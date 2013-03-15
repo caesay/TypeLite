@@ -48,6 +48,7 @@
     <Compile Include="TsClassAttribute.cs" />
     <Compile Include="TsIgnoreAttribute.cs" />
     <Compile Include="TsModels\SystemTypeKind.cs" />
+    <Compile Include="TsModels\TsModule.cs" />
     <Compile Include="TsPropertyAttribute.cs" />
     <Compile Include="TypeScript.cs" />
     <Compile Include="TsGenerator.cs" />

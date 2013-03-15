@@ -13,15 +13,20 @@ namespace TypeLite {
 	/// When a class is added to the model by TsModelBuilder, TsType is used for all type references. The purpose of the TypeResolver is to visit references and resolve them to the more specific types.
 	/// </remarks>
 	internal class TypeResolver : TsModelVisitor {
+		TsModel _model;
 		Dictionary<Type, TsType> _knownTypes;
+		Dictionary<string, TsModule> _modules;
 
 		/// <summary>
 		/// Initializes a new instance of the TypeResolver.
 		/// </summary>
-		/// <param name="classes">The collection of model classes.</param>
-		public TypeResolver(IEnumerable<TsClass> classes) {
+		/// <param name="model">The model to process.</param>
+		public TypeResolver(TsModel model) {
+			_model = model;
+			_modules = new Dictionary<string, TsModule>();
 			_knownTypes = new Dictionary<Type, TsType>();
-			foreach (var classModel in classes) {
+		
+			foreach (var classModel in model.Classes) {
 				_knownTypes[classModel.ClrType] = classModel;
 			}
 		}
@@ -31,6 +36,10 @@ namespace TypeLite {
 		/// </summary>
 		/// <param name="classModel"></param>
 		public override void VisitClass(TsClass classModel) {
+			if (classModel.Module != null) {
+				classModel.Module = this.ResolveModule(classModel.Module.Name);
+			}
+
 			if (classModel.BaseType != null && classModel.BaseType != TsType.Any) {
 				classModel.BaseType = this.ResolveType(classModel.BaseType);
 			}
@@ -80,6 +89,22 @@ namespace TypeLite {
 			var resolved = new TsCollection(type.ClrType);
 			resolved.ItemsType = this.ResolveType(resolved.ItemsType);
 			return resolved;
+		}
+
+		/// <summary>
+		/// Resolves module instance from the module name.
+		/// </summary>
+		/// <param name="name">The name of the module</param>
+		/// <returns></returns>
+		private TsModule ResolveModule(string name) {
+			if (_modules.ContainsKey(name)) {
+				return _modules[name];
+			}
+
+			var module = new TsModule(name);
+			_modules[name] = module;
+			_model.Modules.Add(module);
+			return module;
 		}
 	}
 }

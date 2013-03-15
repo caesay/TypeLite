@@ -35,7 +35,7 @@ namespace TypeLite.Tests {
 			var target = new TsGenerator();
 			var script = target.Generate(model);
 
-			Assert.True(string.IsNullOrWhiteSpace(script));
+			Assert.DoesNotContain("Address", script);
 		}
 
 		[Fact]

@@ -58,10 +58,51 @@ namespace TypeLite.Tests.TsModels {
 		}
 
 		[Fact]
-		public void WhenClassHasCustomNameInAttribute_CustomNameIsUsed() {
+		public void WhenInitializedAndClassHasCustomNameInAttribute_CustomNameIsUsed() {
 			var target = new TsClass(typeof(CustomClassName));
 
 			Assert.Equal("MyClass", target.Name);
+        }
+
+		[Fact]
+		public void WhenInitialized_ModuleIsSetToNamespaceModule() {
+			var target = new TsClass(typeof(Address));
+
+			Assert.NotNull(target.Module);
+			Assert.Equal(typeof(Address).Namespace, target.Module.Name);
 		}
-	}
+
+		[Fact]
+		public void WhenInitializedAndClassHasCustomModuleInAttribute_CustomModuleIsUsed() {
+			var target = new TsClass(typeof(CustomClassName));
+
+			Assert.Equal("MyModule", target.Module.Name);
+		}
+
+        #region Module property tests
+
+        [Fact]
+        public void WhenModuleIsSet_ClassIsAddedToModule() {
+            var module = new TsModule("Tests");
+            var target = new TsClass(typeof(Address));
+
+            target.Module = module;
+
+            Assert.Contains(target, module.Classes);
+        }
+
+        [Fact]
+        public void WhenModuleIsSetToOtherModule_ClassIsRemovedFromOriginalModule() {
+            var originalModule = new TsModule("Tests.Original");            
+            var module = new TsModule("Tests");
+            var target = new TsClass(typeof(Address));
+
+            target.Module = originalModule;
+            target.Module = module;
+
+            Assert.DoesNotContain(target, originalModule.Classes);
+        }
+
+        #endregion
+    }
 }

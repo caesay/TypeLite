@@ -60,6 +60,7 @@
     <Compile Include="TsModelBuilderTests.cs" />
     <Compile Include="TsModels\TsClassTests.cs" />
     <Compile Include="TsModels\TsCollectionTests.cs" />
+    <Compile Include="TsModels\TsModuleTests.cs" />
     <Compile Include="TsModels\TsPropertyTests.cs" />
     <Compile Include="TsModels\TsSystemTypeTests.cs" />
     <Compile Include="TsModels\TsTypeTests.cs" />

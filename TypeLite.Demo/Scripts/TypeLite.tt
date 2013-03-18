@@ -7,5 +7,5 @@
 <#@ output extension=".d.ts"#>
 
 <#= TypeScript.Definitions()
-		.For(typeof(TypeLite.Demo.Models.Customer).Assembly)
+		.ForLoadedAssemblies()
  #>

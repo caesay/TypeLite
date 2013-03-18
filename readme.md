@@ -6,7 +6,7 @@ It's especially useful to keep your [TypeScript](http://www.typescriptlang.org/)
 
 ## Usage
 
-Please check [TypeScript](http://type.litesolutions.net/)
+Please check [the project webpage](http://type.litesolutions.net/)
 
 ## License
 

@@ -5,4 +5,4 @@
 <#@ import namespace="TypeLite" #> 
 <#@output extension=".d.ts"#>
 
-<#= TypeScript.GenerateDefinitions() #>
+<#= TypeScript.Definitions() #>

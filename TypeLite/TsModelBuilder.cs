@@ -57,7 +57,7 @@ namespace TypeLite {
 		public void Add(Type clrType, bool includeReferences) {
 			var typeFamily = TsType.GetTypeFamily(clrType);
 			if (typeFamily != TsTypeFamily.Class) {
-				throw new ArgumentException(string.Format("Type '{0}' isn't class. Only classes can be added to model", clrType.FullName));
+				throw new ArgumentException(string.Format("Type '{0}' isn't class. Only classes can be added to the model", clrType.FullName));
 			}
 
 			if (!this.Classes.ContainsKey(clrType)) {
@@ -73,12 +73,22 @@ namespace TypeLite {
 		}
 
 		/// <summary>
+		/// Adds all classes annotated with the TsClassAttribute from an assembly to the model.
+		/// </summary>
+		/// <param name="assembly">The assembly with classes to add</param>
+		public void Add(Assembly assembly) {
+			foreach (var type in assembly.GetTypes().Where(t => t.GetCustomAttribute<TsClassAttribute>(false) != null && TsType.GetTypeFamily(t) == TsTypeFamily.Class)) {
+				this.Add(type);
+			}
+		}
+
+		/// <summary>
 		/// Build the model.
 		/// </summary>
 		/// <returns>The script model with the classes.</returns>
 		public TsModel Build() {
-			var model = new TsModel() { Classes = this.Classes.Values.ToList() };
-			model.RunVisitor(new TypeResolver(this.Classes.Values));
+			var model = new TsModel(this.Classes.Values);
+			model.RunVisitor(new TypeResolver(model));
 			return model;
 		}
 
@@ -89,7 +99,12 @@ namespace TypeLite {
 		private void AddReferences(TsClass classModel) {
 			foreach (var property in classModel.Properties) {
 				var propertyTypeFamily = TsType.GetTypeFamily(property.PropertyType.ClrType);
-				if (propertyTypeFamily == TsTypeFamily.Class) {
+				if (propertyTypeFamily == TsTypeFamily.Collection) {
+					var collectionItemType = TsType.GetEnumerableType(property.PropertyType.ClrType);
+					if (collectionItemType != null && TsType.GetTypeFamily(collectionItemType) == TsTypeFamily.Class) {
+						this.Add(collectionItemType);
+					}
+				} else if (propertyTypeFamily == TsTypeFamily.Class) {
 					this.Add(property.PropertyType.ClrType);
 				}
 			}

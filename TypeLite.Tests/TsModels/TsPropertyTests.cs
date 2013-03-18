@@ -19,6 +19,15 @@ namespace TypeLite.Tests.TsModels {
 		}
 
 		[Fact]
+		public void WhenInitialized_IsIgnoredIsFalse() {
+			var propertyInfo = typeof(Person).GetProperty("Name");
+
+			var target = new TsProperty(propertyInfo);
+
+			Assert.False(target.IsIgnored);
+		}
+
+		[Fact]
 		public void WhenInitialized_NameIsSet() {
 			var propertyInfo = typeof(Person).GetProperty("Name");
 
@@ -34,6 +43,24 @@ namespace TypeLite.Tests.TsModels {
 			var target = new TsProperty(propertyInfo);
 
 			Assert.Equal(propertyInfo.PropertyType, target.PropertyType.ClrType);
+		}
+
+		[Fact]
+		public void WhenInitializedAndHasCustomNameInAttribute_CustomNameIsUsed() {
+			var propertyInfo = typeof(CustomClassName).GetProperty("CustomPorperty");
+
+			var target = new TsProperty(propertyInfo);
+
+			Assert.Equal("MyProperty", target.Name);
+		}
+
+		[Fact]
+		public void WhenInitializedAndIsAnnotatedWithIgnoreAttribute_IsIgnoresIsSetToTrue() {
+			var propertyInfo = typeof(Product).GetProperty("Ignored");
+
+			var target = new TsProperty(propertyInfo);
+
+			Assert.True(target.IsIgnored);
 		}
 	}
 }

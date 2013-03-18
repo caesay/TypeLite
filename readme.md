@@ -1,8 +1,8 @@
 # TypeLITE
 
-TypeLITE is an utility, that generates [TypeScript](http://www.typescriptlang.org/) definitions from .NET classes. 
+TypeLITE is the utility, that generates [TypeScript](http://www.typescriptlang.org/) definitions from .NET classes. 
 
-It's especially useful to keep your [TypeScript](http://www.typescriptlang.org/) classes on the client in sync with your POCO classes on server.
+It's especially useful to keep your [TypeScript](http://www.typescriptlang.org/) classes on the client in sync with your POCO classes on the server.
 
 ## Usage
 
@@ -12,7 +12,7 @@ It's especially useful to keep your [TypeScript](http://www.typescriptlang.org/)
 ```
 #!c#
 
-TypeScript.GenerateDefinitions().Include<Employee>()
+TypeScript.GenerateDefinitions().Include<Employee>().Include<Company>()
 ```
 
 3. Generate TypeScript definitions for specified classes - right-click to the TypeLite.tt in the Solution Explorer and select Run Custom Tool.

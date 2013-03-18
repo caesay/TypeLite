@@ -62,6 +62,38 @@ namespace TypeLite.Tests {
 			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Person)));
 		}
 
+		[Fact]
+		public void WhenAddClassWithReferenceAndReferenceIsCollectionOfCustomType_CustomTypeIsAddedToModel() {
+			var target = new TsModelBuilder();
+
+			target.Add<CustomTypeCollectionReference>(true);
+
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(CustomTypeCollectionReference)));
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Product)));
+		}
+
+		[Fact]
+		public void WhenAddClassWithReferenceAndReferenceIsIEnumerableOfCustomType_CustomTypeIsAddedToModel() {
+			var target = new TsModelBuilder();
+
+			target.Add<CustomTypeCollectionReference>(true);
+
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(CustomTypeCollectionReference)));
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Person)));
+		}
+
+		#endregion
+
+		#region Add(Assembly) tests
+
+		[Fact]
+		public void WhenAdd_AllClassesWithTsClassAttributeAreAdded() {
+			var target = new TsModelBuilder();
+			target.Add(typeof(Product).Assembly);
+
+			Assert.Single(target.Classes.Values.Where(o => o.ClrType == typeof(Product)));
+		}
+
 		#endregion
 
 		#region Build tests
@@ -77,6 +109,19 @@ namespace TypeLite.Tests {
 		}
 
 		[Fact]
+		public void WhenBuild_ModelWithModulesIsReturned() {
+			var target = new TsModelBuilder();
+			target.Add(typeof(Person), true);
+
+			var model = target.Build();
+
+			var module = model.Modules.Single();
+			var personClass = model.Classes.Where(o => o.ClrType == typeof(Person)).Single();
+
+			Assert.Same(personClass.Module, module);
+		}
+
+		[Fact]
 		public void WhenBuild_TypeReferencesInModelAreResolved() {
 			var target = new TsModelBuilder();
 			target.Add(typeof(Person), true);
@@ -89,6 +134,19 @@ namespace TypeLite.Tests {
 			Assert.Same(addressClass, personClass.Properties.Where(p => p.Name == "PrimaryAddress").Single().PropertyType);
 			Assert.IsType<TsSystemType>(personClass.Properties.Where(p => p.Name == "Name").Single().PropertyType);
 			Assert.IsType<TsCollection>(personClass.Properties.Where(p => p.Name == "Addresses").Single().PropertyType);
+		}
+
+		[Fact]
+		public void WhenBuild_ModulesInModelAreResolved() {
+			var target = new TsModelBuilder();
+			target.Add(typeof(Person));
+
+			var model = target.Build();
+
+			var personClass = model.Classes.Where(o => o.ClrType == typeof(Person)).Single();
+			var addressClass = model.Classes.Where(o => o.ClrType == typeof(Address)).Single();
+
+			Assert.Same(personClass.Module, addressClass.Module);
 		}
 
 		#endregion

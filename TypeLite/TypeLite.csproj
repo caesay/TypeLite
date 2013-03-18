@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\TypeLite.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,7 +45,13 @@
     <Compile Include="ITsModelVisitor.cs" />
     <Compile Include="ITsTypeFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TsClassAttribute.cs" />
+    <Compile Include="TsIgnoreAttribute.cs" />
+    <Compile Include="TsModels\IMemberIdentifier.cs" />
     <Compile Include="TsModels\SystemTypeKind.cs" />
+    <Compile Include="TsMemberIdentifierFormatter.cs" />
+    <Compile Include="TsModels\TsModule.cs" />
+    <Compile Include="TsPropertyAttribute.cs" />
     <Compile Include="TypeScript.cs" />
     <Compile Include="TsGenerator.cs" />
     <Compile Include="TsModel.cs" />
@@ -63,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TypeLite.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

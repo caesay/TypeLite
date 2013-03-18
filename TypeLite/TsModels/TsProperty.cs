@@ -9,7 +9,7 @@ namespace TypeLite.TsModels {
 	/// <summary>
 	/// Represents a property of the class in the code model.
 	/// </summary>
-	public class TsProperty {
+	public class TsProperty : IMemberIdentifier {
 		/// <summary>
 		/// Gets or sets name of the property.
 		/// </summary>

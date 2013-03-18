@@ -12,6 +12,7 @@ namespace TypeLite {
 	/// </summary>
 	public class TsGenerator {
 		private TsTypeFormatterCollection _formatter;
+		private TsMemberIdentifierFormatter _memberFormatter;
 		private HashSet<TsClass> _generatedClasses;
 
 		/// <summary>
@@ -33,6 +34,8 @@ namespace TypeLite {
 			_formatter.RegisterTypeFormatter<TsClass>((type, formatter) => ((TsClass)type).Name);
 			_formatter.RegisterTypeFormatter<TsSystemType>((type, formatter) => ((TsSystemType)type).Kind.ToString().ToLower());
 			_formatter.RegisterTypeFormatter<TsCollection>((type, formatter) => formatter.FormatType(((TsCollection)type).ItemsType) + "[]");
+
+			_memberFormatter = (identifier) => identifier.Name;
 		}
 
 		/// <summary>
@@ -45,6 +48,22 @@ namespace TypeLite {
 		/// </remarks>
 		public void RegisterTypeFormatter<TFor>(TsTypeFormatter formatter) where TFor : TsType {
 			_formatter.RegisterTypeFormatter<TFor>(formatter);
+		}
+
+		/// <summary>
+		/// Registers the custom formatter for the TsClass type.
+		/// </summary>
+		/// <param name="formatter">The formatter to register.</param>
+		public void RegisterTypeFormatter(TsTypeFormatter formatter) {
+			_formatter.RegisterTypeFormatter<TsClass>(formatter);
+		}
+
+		/// <summary>
+		/// Registers a formatter for class member identifiers.
+		/// </summary>
+		/// <param name="formatter">The formater to register.</param>
+		public void RegisterIdentifierFormatter(TsMemberIdentifierFormatter formatter) {
+			_memberFormatter = formatter;
 		}
 
 		/// <summary>
@@ -120,7 +139,7 @@ namespace TypeLite {
 					continue;
 				}
 
-				sb.AppendFormat("  {0}: {1};", property.Name, _formatter.FormatType(property.PropertyType));
+				sb.AppendFormat("  {0}: {1};", _memberFormatter(property), _formatter.FormatType(property.PropertyType));
 				sb.AppendLine();
 			}
 

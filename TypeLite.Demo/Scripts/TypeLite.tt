@@ -6,6 +6,6 @@
 <#@ import namespace="TypeLite" #> 
 <#@ output extension=".d.ts"#>
 
-<#= TypeScript.GenerateDefinitions()
-		.IncludeFromAssembly(typeof(TypeLite.Demo.Models.Customer).Assembly)
+<#= TypeScript.Definitions()
+		.For(typeof(TypeLite.Demo.Models.Customer).Assembly)
  #>

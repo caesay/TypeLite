@@ -72,7 +72,7 @@ namespace TypeLite {
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
 		public FluentTsModelBuider ForLoadedAssemblies() {
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-				_modelBuilder.Add(assembly);	
+				_modelBuilder.Add(assembly);
 			}
 
 			return this;
@@ -96,6 +96,16 @@ namespace TypeLite {
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
 		public FluentTsModelBuider WithFormatter(TsTypeFormatter formatter) {
 			_scriptGenerator.RegisterTypeFormatter(formatter);
+			return this;
+		}
+
+		/// <summary>
+		/// Registers a formatter for member identifiers
+		/// </summary>
+		/// <param name="formatter">The formatter to register</param>
+		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
+		public FluentTsModelBuider WithFormatter(TsMemberIdentifierFormatter formatter) {
+			_scriptGenerator.RegisterIdentifierFormatter(formatter);
 			return this;
 		}
 

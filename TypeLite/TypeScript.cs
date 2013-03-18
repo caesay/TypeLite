@@ -16,22 +16,22 @@ namespace TypeLite {
 		/// Creates an instance of the FluentTsModelBuider for use in T4 templates.
 		/// </summary>
 		/// <returns>An instance of the FluentTsModelBuider</returns>
-		public static FluentTsModelBuider Definitions() {
-			return new FluentTsModelBuider();
+		public static TypeScriptFluent Definitions() {
+			return new TypeScriptFluent();
 		}
 	}
 
 	/// <summary>
 	/// Represents a wrapper around TsModelBuilder and TsGenerator that simplify usage a enables fluent configuration.
 	/// </summary>
-	public class FluentTsModelBuider {
+	public class TypeScriptFluent {
 		private TsModelBuilder _modelBuilder;
 		private TsGenerator _scriptGenerator;
 
 		/// <summary>
 		/// Initializes a new instance of the TypeScriptFluent class
 		/// </summary>
-		public FluentTsModelBuider() {
+		public TypeScriptFluent() {
 			_modelBuilder = new TsModelBuilder();
 			_scriptGenerator = new TsGenerator();
 		}
@@ -41,7 +41,7 @@ namespace TypeLite {
 		/// </summary>
 		/// <typeparam name="T">The class type to add.</typeparam>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
-		public FluentTsModelBuider For<T>() {
+		public TypeScriptFluent For<T>() {
 			_modelBuilder.Add<T>();
 			return this;
 		}
@@ -51,7 +51,7 @@ namespace TypeLite {
 		/// </summary>
 		/// <param name="type">The type to add to the model.</param>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
-		public FluentTsModelBuider For(Type type) {
+		public TypeScriptFluent For(Type type) {
 			_modelBuilder.Add(type);
 			return this;
 		}
@@ -61,7 +61,7 @@ namespace TypeLite {
 		/// </summary>
 		/// <param name="assembly">The assembly with classes to add.</param>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
-		public FluentTsModelBuider For(Assembly assembly) {
+		public TypeScriptFluent For(Assembly assembly) {
 			_modelBuilder.Add(assembly);
 			return this;
 		}
@@ -70,7 +70,7 @@ namespace TypeLite {
 		/// Adds all classes annotated with the TsClassAttribute from all curently loaded assemblies.
 		/// </summary>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
-		public FluentTsModelBuider ForLoadedAssemblies() {
+		public TypeScriptFluent ForLoadedAssemblies() {
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
 				_modelBuilder.Add(assembly);
 			}
@@ -84,7 +84,7 @@ namespace TypeLite {
 		/// <typeparam name="TFor">The type to register the formatter for. TFor is restricted to TsType and derived classes.</typeparam>
 		/// <param name="formatter">The formatter to register</param>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
-		public FluentTsModelBuider WithFormatter<TFor>(TsTypeFormatter formatter) where TFor : TsType {
+		public TypeScriptFluent WithFormatter<TFor>(TsTypeFormatter formatter) where TFor : TsType {
 			_scriptGenerator.RegisterTypeFormatter<TFor>(formatter);
 			return this;
 		}
@@ -94,7 +94,7 @@ namespace TypeLite {
 		/// </summary>
 		/// <param name="formatter">The formatter to register</param>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
-		public FluentTsModelBuider WithFormatter(TsTypeFormatter formatter) {
+		public TypeScriptFluent WithFormatter(TsTypeFormatter formatter) {
 			_scriptGenerator.RegisterTypeFormatter(formatter);
 			return this;
 		}
@@ -104,7 +104,7 @@ namespace TypeLite {
 		/// </summary>
 		/// <param name="formatter">The formatter to register</param>
 		/// <returns>Instance of the TypeScriptFluent that enables fluent configuration.</returns>
-		public FluentTsModelBuider WithFormatter(TsMemberIdentifierFormatter formatter) {
+		public TypeScriptFluent WithFormatter(TsMemberIdentifierFormatter formatter) {
 			_scriptGenerator.RegisterIdentifierFormatter(formatter);
 			return this;
 		}

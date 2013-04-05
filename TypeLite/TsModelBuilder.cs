@@ -62,13 +62,14 @@ namespace TypeLite {
 
 			if (!this.Classes.ContainsKey(clrType)) {
 				var added = new TsClass(clrType);
+				this.Classes[clrType] = added;
+
 				if (added.BaseType != null) {
 					this.Add(added.BaseType.ClrType);
 				}
 				if (includeReferences) {
 					this.AddReferences(added);
 				}
-				this.Classes[clrType] = added;
 			}
 		}
 

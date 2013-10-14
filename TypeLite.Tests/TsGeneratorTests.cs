@@ -113,6 +113,21 @@ namespace TypeLite.Tests {
 			Assert.Contains("Ids: string[]", script);
 		}
 
+        [Fact]
+        public void WhenConvertorIsRegisteredForGuid_NoStringInterfaceIsDefined()
+        {
+            var builder = new TsModelBuilder();
+            builder.Add<Address>();
+            var model = builder.Build();
+
+            var target = new TsGenerator();
+            target.RegisterTypeConvertor<Guid>(type => "string");
+            var script = target.Generate(model);
+
+            Assert.DoesNotContain("interface string {", script);
+
+        }
+
 		#endregion
 	}
 }

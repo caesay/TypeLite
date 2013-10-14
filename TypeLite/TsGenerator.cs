@@ -51,7 +51,7 @@ namespace TypeLite {
 		/// <typeparam name="TFor">The type to register the formatter for. TFor is restricted to TsType and derived classes.</typeparam>
 		/// <param name="formatter">The formatter to register</param>
 		/// <remarks>
-		/// If a formatter for the type is already registered, it is overwriten with the new value.
+		/// If a formatter for the type is already registered, it is overwritten with the new value.
 		/// </remarks>
 		public void RegisterTypeFormatter<TFor>(TsTypeFormatter formatter) where TFor : TsType {
 			_formatter.RegisterTypeFormatter<TFor>(formatter);
@@ -66,12 +66,12 @@ namespace TypeLite {
 		}
 
 		/// <summary>
-		/// Registers the convertor for the specific Type
+		/// Registers the converter for the specific Type
 		/// </summary>
-		/// <typeparam name="TFor">The type to register the convertor for.</typeparam>
-		/// <param name="convertor">The convertor to register</param>
+		/// <typeparam name="TFor">The type to register the converter for.</typeparam>
+		/// <param name="convertor">The converter to register</param>
 		/// <remarks>
-		/// If a convertor for the type is already registered, it is overwriten with the new value.
+		/// If a converter for the type is already registered, it is overwritten with the new value.
 		/// </remarks>
 		public void RegisterTypeConvertor<TFor>(TypeConvertor convertor) {
 			_convertor.RegisterTypeConverter<TFor>(convertor);
@@ -80,7 +80,7 @@ namespace TypeLite {
 		/// <summary>
 		/// Registers a formatter for class member identifiers.
 		/// </summary>
-		/// <param name="formatter">The formater to register.</param>
+		/// <param name="formatter">The formatter to register.</param>
 		public void RegisterIdentifierFormatter(TsMemberIdentifierFormatter formatter) {
 			_memberFormatter = formatter;
 		}
@@ -116,22 +116,26 @@ namespace TypeLite {
 		}
 
 		private void AppendModule(TsModule module, StringBuilder sb) {
+            var classes = module.Classes.Where(c => !_convertor.IsConvertorRegistered(c.ClrType)).ToList();
+            var enums = module.Enums.Where(e => !_convertor.IsConvertorRegistered(e.ClrType)).ToList();
+            if (enums.Count == 0 && classes.Count == 0)
+                return;
+
 			sb.AppendFormat("declare module {0} ", module.Name);
 			sb.AppendLine("{");
 
-			foreach (var enumModel in module.Enums) {
+			foreach (var enumModel in enums) {
 				if (enumModel.IsIgnored) {
 					continue;
 				}
-
 				this.AppendEnumDefinition(enumModel, sb);
 			}
 
-			foreach (var classModel in module.Classes) {
+			foreach (var classModel in classes) {
 				if (classModel.IsIgnored) {
 					continue;
 				}
-
+                
 				this.AppendClassDefinition(classModel, sb);
 			}
 

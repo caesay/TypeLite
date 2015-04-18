@@ -32,7 +32,20 @@ namespace TypeLite.TsModels {
 		/// <summary>
 		/// Represents the TsType for the object CLR type.
 		/// </summary>
-		public static readonly TsType Any = new TsType(typeof(object));
+        public static readonly TsType Any = new TsType(typeof(object));		///NEW !!
+        
+
+        //NEW - used by Knockout model generator
+        /// <summary>
+        /// Returns true if this property is collection
+        /// </summary>
+        /// <returns></returns>
+        public bool IsCollection()
+        {
+            return GetTypeFamily(this.Type) == TsTypeFamily.Collection;
+        }
+
+
 
 		/// <summary>
 		/// Gets TsTypeFamily of the CLR type.

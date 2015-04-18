@@ -110,6 +110,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestScripts\Knockout\TsKo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TsKo.d.ts</LastGenOutput>
+    </None>
     <None Include="TestScripts\TsUtils.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TsUtils.d.ts</LastGenOutput>
@@ -144,6 +148,14 @@
     <TypeScriptCompile Include="TestScripts\Enums.ts">
       <DependentUpon>TsUtils.tt</DependentUpon>
     </TypeScriptCompile>
+    <None Include="TestScripts\Knockout\Enums.ts">
+      <DependentUpon>TsKo.tt</DependentUpon>
+    </None>
+    <None Include="TestScripts\Knockout\TsKo.d.ts">
+      <DependentUpon>TsKo.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

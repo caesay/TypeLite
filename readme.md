@@ -1,6 +1,26 @@
 # This Fork
 This fork adds support for typings of Knockout form.
-This involves returning classes where the type is KnocoutObservable<T> or KnockoutObservableArray<t>
+This involves returning classes where the type is KnocoutObservable<T> or KnockoutObservableArray<T>
+
+Example result:
+
+
+```
+#!typescript
+
+declare module ServerTypings.ModelConn {
+	interface IInvoicesView {
+		Id: KnockoutObservable<number>;
+		IdStr: KnockoutObservable<string>;
+		InvoiceNo: KnockoutObservable<number>;
+		InvoiceNoStr: KnockoutObservable<string>;
+		InvoiceDate: KnockoutObservable<Date>;
+		OptShowPaymentMethod: KnockoutObservable<boolean>;
+		InvoiceLinesView: KockoutObservableArray<ServerTypings.ModelConn.IInvoiceLinesView>;
+   }
+}
+```
+
 
 # TypeLITE
 

@@ -28,11 +28,11 @@ Just replace the
 
 TypeScript.Definitions()
 ```
- clause in the **.tt** file with T
+ clause in the **.tt** file with
 ```
 #!c#
 
-ypeScript.Definitions(new TypeLite.AlternateGenerators.TsKnockoutModelGenerator()) 
+TypeScript.Definitions(new TypeLite.AlternateGenerators.TsKnockoutModelGenerator()) 
 ```
 
 and you are all done.

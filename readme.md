@@ -1,3 +1,7 @@
+# This Fork
+This fork adds support for typings of Knockout form.
+This involves returning classes where the type is KnocoutObservable<T> or KnockoutObservableArray<t>
+
 # TypeLITE
 
 TypeLITE is the utility, that generates [TypeScript](http://www.typescriptlang.org/) definitions from .NET classes. 
@@ -110,4 +114,4 @@ Fixed		#6: Properties with System.Guid type result in invalid typescript code
 ### Version 0.8.2		(8. 4. 2013)
 Fixed		#2: TsIgnore-attribute doesn't work with properties
 Added		Support for nullable value types
-Added		Support for .NET 4		 
+Added		Support for .NET 4

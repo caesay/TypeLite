@@ -20,6 +20,22 @@ declare module ServerTypings.ModelConn {
    }
 }
 ```
+# The TsKnockoutModelGenerator
+Applying the Knockoutformatter is simple..
+Just replace the 
+```
+#!c#
+
+TypeScript.Definitions()
+```
+ clause in the **.tt** file with T
+```
+#!c#
+
+ypeScript.Definitions(new TypeLite.AlternateGenerators.TsKnockoutModelGenerator()) 
+```
+
+and you are all done.
 
 
 # TypeLITE

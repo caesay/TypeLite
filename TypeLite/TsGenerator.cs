@@ -13,7 +13,7 @@ namespace TypeLite {
     /// </summary>
     public class TsGenerator {
         protected TsTypeFormatterCollection _typeFormatters;
-        protected TypeConvertorCollection _typeConvertors;
+        internal TypeConvertorCollection _typeConvertors;
         protected TsMemberIdentifierFormatter _memberFormatter;
         protected TsMemberTypeFormatter _memberTypeFormatter;
         protected TsTypeVisibilityFormatter _typeVisibilityFormatter;

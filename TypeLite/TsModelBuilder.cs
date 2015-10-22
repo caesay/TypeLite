@@ -60,14 +60,14 @@ namespace TypeLite {
         /// <param name="clrType">The type to add to the model.</param>
         /// <param name="includeReferences">bool value indicating whether classes referenced by T should be added to the model.</param>
         /// <returns>type added to the model</returns>
-        public TsModuleMember Add(Type clrType, bool includeReferences) {
+        public TsModuleMember Add(Type clrType, bool includeReferences, Dictionary<Type,TypeConvertor> typeConvertors = null) {
             var typeFamily = TsType.GetTypeFamily(clrType);
             if (typeFamily != TsTypeFamily.Class && typeFamily != TsTypeFamily.Enum) {
                 throw new ArgumentException(string.Format("Type '{0}' isn't class or struct. Only classes and structures can be added to the model", clrType.FullName));
             }
-
+            
             if (clrType.IsNullable()) {
-                return this.Add(clrType.GetNullableValueType(), includeReferences);
+                return this.Add(clrType.GetNullableValueType(), includeReferences, typeConvertors);
             }
 
             if (typeFamily == TsTypeFamily.Enum) {
@@ -82,7 +82,7 @@ namespace TypeLite {
                     var added = new TsClass(openGenericType);
                     this.Classes[openGenericType] = added;
                     if (includeReferences) {
-                        this.AddReferences(added);
+                        this.AddReferences(added, typeConvertors);
 
                         foreach (var e in added.Properties.Where(p => p.PropertyType.Type.IsEnum))
                             this.AddEnum(e.PropertyType as TsEnum);
@@ -100,7 +100,7 @@ namespace TypeLite {
                     this.Add(added.BaseType.Type);
                 }
                 if (includeReferences) {
-                    this.AddReferences(added);
+                    this.AddReferences(added, typeConvertors);
 
                     foreach (var e in added.Properties.Where(p => p.PropertyType.Type.IsEnum))
                         this.AddEnum(e.PropertyType as TsEnum);
@@ -154,7 +154,7 @@ namespace TypeLite {
         /// Adds classes referenced by the class to the model
         /// </summary>
         /// <param name="classModel"></param>
-        private void AddReferences(TsClass classModel) {
+        private void AddReferences(TsClass classModel, Dictionary<Type, TypeConvertor> typeConvertors) {
             foreach (var property in classModel.Properties.Where(model => !model.IsIgnored)) {
                 var propertyTypeFamily = TsType.GetTypeFamily(property.PropertyType.Type);
                 if (propertyTypeFamily == TsTypeFamily.Collection) {
@@ -180,7 +180,14 @@ namespace TypeLite {
                         }
                     }
                 } else if (propertyTypeFamily == TsTypeFamily.Class) {
-                    this.Add(property.PropertyType.Type);
+                    if (!typeConvertors.ContainsKey(property.PropertyType.Type))
+                    {
+                        this.Add(property.PropertyType.Type);
+                    }
+                    else
+                    {
+                        this.Add(property.PropertyType.Type, false, typeConvertors);
+                    }
                 }
             }
             foreach (var genericArgument in classModel.GenericArguments) {

@@ -86,12 +86,14 @@
     <Compile Include="RegressionTests\ModuleNameFormatterTests.cs" />
     <Compile Include="RegressionTests\Issue85_ReUseTheModifiedTsEnum.cs" />
     <Compile Include="RegressionTests\NullablesTests.cs" />
+    <Compile Include="RegressionTests\Issue82_OrderingTests.cs" />
     <Compile Include="ScriptBuilderTests.cs" />
     <Compile Include="TestModels\Address.cs" />
     <Compile Include="TestModels\ContactType.cs" />
     <Compile Include="TestModels\CustomClassName.cs" />
     <Compile Include="TestModels\CustomerKind.cs" />
     <Compile Include="TestModels\CustomTypeCollectionReference.cs" />
+    <Compile Include="TestModels\DifferentNamespaces.cs" />
     <Compile Include="TestModels\Employee.cs" />
     <Compile Include="TestModels\IgnoreTest.cs" />
     <Compile Include="TestModels\IShippingService.cs" />

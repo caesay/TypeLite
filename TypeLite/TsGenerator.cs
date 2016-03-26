@@ -209,7 +209,9 @@ namespace TypeLite {
                 sb.AppendLine();
             }
 
-            foreach (var module in model.Modules) {
+            // We can't just sort by the module name, because a formatter can jump in and change it so
+            // format by the desired target name
+            foreach (var module in model.Modules.OrderBy(m => GetModuleName(m))) {
                 this.AppendModule(module, sb, generatorOutput);
             }
 
@@ -227,8 +229,8 @@ namespace TypeLite {
         }
 
         protected virtual void AppendModule(TsModule module, ScriptBuilder sb, TsGeneratorOutput generatorOutput) {
-            var classes = module.Classes.Where(c => !_typeConvertors.IsConvertorRegistered(c.Type) && !c.IsIgnored).ToList();
-            var enums = module.Enums.Where(e => !_typeConvertors.IsConvertorRegistered(e.Type) && !e.IsIgnored).ToList();
+            var classes = module.Classes.Where(c => !_typeConvertors.IsConvertorRegistered(c.Type) && !c.IsIgnored).OrderBy(c => GetTypeName(c)).ToList();
+            var enums = module.Enums.Where(e => !_typeConvertors.IsConvertorRegistered(e.Type) && !e.IsIgnored).OrderBy(e => GetTypeName(e)).ToList();
             if ((generatorOutput == TsGeneratorOutput.Enums && enums.Count == 0) ||
                 (generatorOutput == TsGeneratorOutput.Properties && classes.Count == 0) ||
                 (enums.Count == 0 && classes.Count == 0)) {
@@ -296,7 +298,7 @@ namespace TypeLite {
                 var implementations = classModel.Interfaces.Select(GetFullyQualifiedTypeName).ToArray();
 
                 var prefixFormat = classModel.Type.IsInterface ? " extends {0}"
-                    : classModel.BaseType != null ? " ,"
+                    : classModel.BaseType != null ? " , {0}"
                     : " extends {0}";
 
                 sb.AppendFormat(prefixFormat, string.Join(" ,", implementations));
@@ -312,11 +314,7 @@ namespace TypeLite {
                 members.AddRange(classModel.Fields);
             }
             using (sb.IncreaseIndentation()) {
-                foreach (var property in members) {
-                    if (property.IsIgnored) {
-                        continue;
-                    }
-
+                foreach (var property in members.Where(p => !p.IsIgnored).OrderBy(p => this.GetPropertyName(p))) {
                     _docAppender.AppendPropertyDoc(sb, property, this.GetPropertyName(property), this.GetPropertyType(property));
                     sb.AppendLineIndented(string.Format("{0}: {1};", this.GetPropertyName(property), this.GetPropertyType(property)));
                 }

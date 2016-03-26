@@ -43,8 +43,8 @@ declare module custom {
             var expectedOutput = @"
 declare module custom {
 	interface Person {
-		WhiteRussian: custom.Drink;
 		AllDrinks: custom.Drink[];
+		WhiteRussian: custom.Drink;
 	}
 }
 declare module custom {

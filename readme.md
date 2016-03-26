@@ -12,6 +12,8 @@ Please check [the project webpage](http://type.litesolutions.net/)
 
 The library is distributed under MIT license.
 
+## Showcase - projects using TypeLITE
+* MvcControllerToProxyGenerator ([https://github.com/squadwuschel/MvcControllerToProxyGenerator](https://github.com/squadwuschel/MvcControllerToProxyGenerator))
 ## Changelog
 
 ### Version 1.7.0       (27. 3. 2016)

@@ -54,6 +54,15 @@ The library is distributed under MIT license.
 
 ## Changelog
 
+### Version 1.7.0       (27. 3. 2016)
+Added       Added alternative generator for KnockoutModels (see https://bitbucket.org/svakinn/typelite/overview)
+
+Fixed       #82 more deterministic ordering of generated code
+
+Fixed       #103 types overriden in converter still appear in generated code
+
+Added       New extension method that register all derived typesTypesDervivedFrom<T>
+
 ### Version 1.6.0       (22. 1. 2016)
 Fixed       #110 interface for classes with a base class
 

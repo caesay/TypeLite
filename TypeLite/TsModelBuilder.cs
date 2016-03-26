@@ -60,12 +60,12 @@ namespace TypeLite {
         /// <param name="clrType">The type to add to the model.</param>
         /// <param name="includeReferences">bool value indicating whether classes referenced by T should be added to the model.</param>
         /// <returns>type added to the model</returns>
-        public TsModuleMember Add(Type clrType, bool includeReferences, Dictionary<Type,TypeConvertor> typeConvertors = null) {
+        public TsModuleMember Add(Type clrType, bool includeReferences, Dictionary<Type, TypeConvertor> typeConvertors = null) {
             var typeFamily = TsType.GetTypeFamily(clrType);
             if (typeFamily != TsTypeFamily.Class && typeFamily != TsTypeFamily.Enum) {
                 throw new ArgumentException(string.Format("Type '{0}' isn't class or struct. Only classes and structures can be added to the model", clrType.FullName));
             }
-            
+
             if (clrType.IsNullable()) {
                 return this.Add(clrType.GetNullableValueType(), includeReferences, typeConvertors);
             }
@@ -180,12 +180,9 @@ namespace TypeLite {
                         }
                     }
                 } else if (propertyTypeFamily == TsTypeFamily.Class) {
-                    if (!typeConvertors.ContainsKey(property.PropertyType.Type))
-                    {
+                    if (typeConvertors == null || !typeConvertors.ContainsKey(property.PropertyType.Type)) {
                         this.Add(property.PropertyType.Type);
-                    }
-                    else
-                    {
+                    } else {
                         this.Add(property.PropertyType.Type, false, typeConvertors);
                     }
                 }

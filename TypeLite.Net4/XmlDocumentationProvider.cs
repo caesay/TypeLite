@@ -84,7 +84,7 @@ namespace TypeLite.Net4 {
             }
             if (type.IsNested) {
                 // Changing the nested type name from OuterType+InnerType to OuterType.InnerType to match the XML documentation syntax.
-                name = name.Replace("+", ".");
+                if (name != null) name = name.Replace("+", ".");
             }
 
             return name;

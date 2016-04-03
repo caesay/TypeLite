@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>TypeLite.Lib</id>
-        <version>1.7.0</version>
+        <version>1.8.0</version>
         <title>TypeLITE.Library</title>
         <authors>Lukas Kabrt and contributors</authors>
         <licenseUrl>http://type.litesolutions.net/license</licenseUrl>
@@ -14,10 +14,10 @@
         <tags>TypeScript</tags>
     </metadata>
     <files>
-        <file src="TypeLite\bin\Release\TypeLite.dll" target="lib\net4\TypeLite.dll" />
+        <file src="TypeLite.Net\bin\Release\TypeLite.dll" target="lib\net4\TypeLite.dll" />
+        <file src="TypeLite.Net\bin\Release\TypeLite.pdb" target="lib\net4\TypeLite.pdb" />
         <file src="TypeLite.Net4\bin\Release\TypeLite.Net4.dll" target="lib\net4\TypeLite.Net4.dll" />
         <file src="TypeLite.Net4\bin\Release\TypeLite.Net4.pdb" target="lib\net4\TypeLite.Net4.pdb" />
-        <file src="TypeLite\bin\Release\TypeLite.pdb" target="lib\net4\TypeLite.pdb" />
         <file src="TypeLite\bin\Release\TypeLite.dll" target="lib\portable-net4+sl4+wp8+win8\TypeLite.dll" />
         <file src="TypeLite\bin\Release\TypeLite.pdb" target="lib\portable-net4+sl4+wp8+win8\TypeLite.pdb" />
     </files>

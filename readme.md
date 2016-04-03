@@ -4,6 +4,10 @@ TypeLITE is the utility, that generates [TypeScript](http://www.typescriptlang.o
 
 It's especially useful to keep your [TypeScript](http://www.typescriptlang.org/) classes on the client in sync with your POCO classes on the server.
 
+## Visual Studio 2015 Update 2
+
+Due to unresolved problems with mscorlib, TypeLITE only works in Visual Studio 2015 Update 2 if the project targets full .NET framework. It doesn't work for Portable class libraries.
+
 ## Usage
 
 Please check [the project webpage](http://type.litesolutions.net/)
@@ -14,14 +18,20 @@ The library is distributed under MIT license.
 
 ## Showcase - projects using TypeLITE
 * MvcControllerToProxyGenerator ([https://github.com/squadwuschel/MvcControllerToProxyGenerator](https://github.com/squadwuschel/MvcControllerToProxyGenerator))
+
 ## Changelog
+
+### Version 1.8.0       (3. 4. 2016)
+Fixed       #118, #113 Issues with Visual Studio 2015 Update 2
+
+Fixed       Error generating documentation with type params
 
 ### Version 1.7.0       (27. 3. 2016)
 Added       Added alternative generator for KnockoutModels (see https://bitbucket.org/svakinn/typelite/overview)
 
 Fixed       #82 more deterministic ordering of generated code
 
-Fixed       #103 types overriden in converter still appear in generated code
+Fixed       #103 types overridden in converter still appear in generated code
 
 Added       New extension method that register all derived typesTypesDervivedFrom<T>
 
@@ -52,7 +62,7 @@ Fixed       #90 export const enum for compatibility with TypeScript 1.5
 ### Version 1.3.0       (6. 7. 2015)
 Added       #89 Added support for Windows Phone 8.1 as target platform
 
-Added       #73 Added support for generating JSDoc comments from XML odcumentation. Works only in .NET 4, needs XML Doc files. Use .WithJSDoc()
+Added       #73 Added support for generating JSDoc comments from XML documentation. Works only in .NET 4, needs XML Doc files. Use .WithJSDoc()
 
 ### Version 1.2.0       (1. 7. 2015)
 Added       #86 Support for classes outside modules. A TS class is generated outside module if the source .NET class isn't in a namespace or if  [TsClass(Module = "")] attribute is used.
@@ -69,7 +79,7 @@ Fixed       #84 Module name formatter doesn't work for nested namespaces
 Fixed		#76 Error when renaming modules
 
 ### Version 1.1.0.0		(12. 2. 2015)
-Added		Better extensibility of TsGenerator, better extensibility of formaters
+Added		Better extensibility of TsGenerator, better extensibility of formatters
 
 ### Version 1.0.2.0		(17. 11. 2014)
 Fixed		#47 Fixed problem with derived generics
@@ -77,7 +87,7 @@ Fixed		#47 Fixed problem with derived generics
 ### Version 1.0.1.0		(17. 11. 2014)
 Fixed		#64 Incorrect definition for KeyValuePair<int, List<string>>
 
-Fixed		#65 Generic porperty referencin containing type causes StackOverflowException
+Fixed		#65 Generic property referencing containing type causes StackOverflowException
 
 Added		#49 Better output formating
 
@@ -118,7 +128,7 @@ Fixed		#33: Enums not created when using list
 
 Fixed		#41: Combination of generics <T> and Enum throws an exception
 
-Fixed		#42: Duplicate TS iterfaces for generic parameters
+Fixed		#42: Duplicate TS interfaces for generic parameters
 
 ### Version 0.9.1.8		(8. 6. 2014)
 Added		Strong assembly names

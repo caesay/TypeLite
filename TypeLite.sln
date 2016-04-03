@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite", "TypeLite\TypeLite.csproj", "{43DCB624-F929-4572-97A3-6B14AC6AD158}"
 EndProject
@@ -33,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite.Tests.AssemblyWithEnum", "TypeLite.Tests.AssemblyWithEnum\TypeLite.Tests.AssemblyWithEnum.csproj", "{7A0F2704-7880-4346-BAEC-B3872390F73B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite.Tests.BackboneExtension", "TypeLite.Tests.BackboneExtension\TypeLite.Tests.BackboneExtension.csproj", "{05C2DCC4-F6F4-4628-A417-0759A61597D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite.Net", "TypeLite.Net\TypeLite.Net.csproj", "{8FA3AA0E-7911-47D7-94A8-3206D897528C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{05C2DCC4-F6F4-4628-A417-0759A61597D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05C2DCC4-F6F4-4628-A417-0759A61597D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05C2DCC4-F6F4-4628-A417-0759A61597D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA3AA0E-7911-47D7-94A8-3206D897528C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA3AA0E-7911-47D7-94A8-3206D897528C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA3AA0E-7911-47D7-94A8-3206D897528C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA3AA0E-7911-47D7-94A8-3206D897528C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

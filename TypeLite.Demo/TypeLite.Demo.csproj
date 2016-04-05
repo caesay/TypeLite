@@ -261,17 +261,13 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TypeLite.Demo.Portable\TypeLite.Demo.Portable.csproj">
-      <Project>{22d48fce-9b05-4fac-9966-311e0b7d61af}</Project>
-      <Name>TypeLite.Demo.Portable</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TypeLite.Net4\TypeLite.Net4.csproj">
       <Project>{0ad860b2-2aaa-47cc-acba-f2d97be19d66}</Project>
       <Name>TypeLite.Net4</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TypeLite\TypeLite.csproj">
-      <Project>{43dcb624-f929-4572-97a3-6b14ac6ad158}</Project>
-      <Name>TypeLite</Name>
+    <ProjectReference Include="..\TypeLite.Net\TypeLite.Net.csproj">
+      <Project>{8fa3aa0e-7911-47d7-94a8-3206d897528c}</Project>
+      <Name>TypeLite.Net</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

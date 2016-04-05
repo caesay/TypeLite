@@ -14,19 +14,9 @@ declare module Eshop {
   interface Customer {
 
     /**
-     * Customer name.
-     */
-    Name: string;
-
-    /**
      * Email address.
      */
     Email: string;
-
-    /**
-     * Customer is VIP member or not.
-     */
-    VIP: boolean;
 
     /**
      * Customer's kind.
@@ -34,9 +24,19 @@ declare module Eshop {
     Kind: Eshop.CustomerKind;
 
     /**
+     * Customer name.
+     */
+    Name: string;
+
+    /**
      * Customer's orders.
      */
     Orders: Eshop.Order[];
+
+    /**
+     * Customer is VIP member or not.
+     */
+    VIP: boolean;
   }
 
   /**
@@ -45,30 +45,35 @@ declare module Eshop {
   interface Order {
 
     /**
-     * products
-     */
-    Products: Eshop.Product[];
-
-    /**
-     * total price
-     */
-    TotalPrice: number;
-
-    /**
      * created date
      */
     Created: Date;
 
     /**
+     * products
+     */
+    Products: Eshop.Product[];
+
+    /**
      * shipped date
      */
     Shipped: Date;
+
+    /**
+     * total price
+     */
+    TotalPrice: number;
   }
 
   /**
    * product
    */
   interface Product {
+
+    /**
+     * ID
+     */
+    ID: System.Guid;
 
     /**
      * name
@@ -79,14 +84,13 @@ declare module Eshop {
      * price
      */
     Price: number;
-
-    /**
-     * ID
-     */
-    ID: System.Guid;
   }
 }
 declare module System {
+
+  /**
+   * Represents a globally unique identifier (GUID).To browse the .NET Framework source code for this type, see the Reference Source.
+   */
   interface Guid {
   }
 }
@@ -101,45 +105,6 @@ declare module TypeLite.Demo.Models {
      * price
      */
     Price: number;
-  }
-}
-declare module Library {
-
-  /**
-   * Book
-   */
-  interface Book {
-
-    /**
-     * name
-     */
-    Title: string;
-
-    /**
-     * pages of book
-     */
-    Pages: number;
-
-    /**
-     * genre
-     */
-    Genre: Library.Genre;
-  }
-
-  /**
-   * book library
-   */
-  interface Library {
-
-    /**
-     * name
-     */
-    Name: string;
-
-    /**
-     * books in library
-     */
-    Books: Library.Book[];
   }
 }
 

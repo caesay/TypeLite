@@ -21,6 +21,9 @@ The library is distributed under MIT license.
 
 ## Changelog
 
+### Version 1.8.1       (7. 4. 2016)
+Added       Added ForReferencedAssembly extension method
+
 ### Version 1.8.0       (3. 4. 2016)
 Fixed       #118, #113 Issues with Visual Studio 2015 Update 2
 
